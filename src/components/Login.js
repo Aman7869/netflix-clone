@@ -4,13 +4,11 @@ import BackgroundImage from "../assets/images/netflix-background.jpg"
 import { checkValidData } from '../utils/validate';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useNavigate } from 'react-router-dom';
 import avatarImage from "../assets/images/avatar-image.png";
 import { addUser } from '../utils/userSlice';
 import { useDispatch } from 'react-redux';
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -45,7 +43,6 @@ const Login = () => {
             dispatch(addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL }));
             // Profile updated!
             console.log('user: ', user);
-            navigate("/browse");
             // ...
           }).catch((error) => {
             // An error occurred
@@ -64,8 +61,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log('user: ', user);
-          navigate("/browse");
           // ...
         })
         .catch((error) => {
